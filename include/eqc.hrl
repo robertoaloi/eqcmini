@@ -14,6 +14,11 @@
 -define(WHENFAIL(Action,Prop),eqc:whenfail(fun(_) -> Action end,?LAZY(Prop))).
 -define(TRAPEXIT(E),eqc:trapexit(?DELAY(E))).
 -define(TIMEOUT(Limit,Prop),eqc:timeout(Limit,?LAZY(Prop))).
+-define(TIMEOUT2(T,Calls),
+		{ok, TRef} = timer:kill_after(T, self()),
+		TestResults = Calls,
+		timer:cancel(TRef),
+		TestResults).
 -define(ALWAYS(N,P),eqc:always(N,?DELAY(P))).
 -define(SOMETIMES(N,P),eqc:sometimes(N,?DELAY(P))).
 % eqc_imports.hrl
